@@ -1,6 +1,5 @@
 package com.qibaili.sniper.web.system.security;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,10 +7,9 @@ import lombok.Data;
  * @date 2019/11/19
  */
 @Data
-@AllArgsConstructor
 public class ImageResult {
 
-    private String image;
+    private String codeUrl;
 
-    private String uuid;
+    private String codeKey;
 }

@@ -39,7 +39,6 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    debugger
     return new Promise((resolve, reject) => {
       login(userInfo)
         .then(response => {

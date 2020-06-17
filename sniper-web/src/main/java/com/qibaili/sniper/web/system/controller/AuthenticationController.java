@@ -27,7 +27,6 @@ import static org.springframework.http.HttpStatus.OK;
  * @date 2019/11/19
  */
 @RestController
-@RequestMapping(value = "auth")
 @Api(tags = "系统：登陆授权")
 public class AuthenticationController {
 
@@ -49,17 +48,17 @@ public class AuthenticationController {
     @ApiOperation("获取验证码")
     @GetMapping(value = "code")
     @AnonymousAccess
-    public ImageResult getCode() {
+    public ResponseResult getCode() {
         // 算术类型 https://gitee.com/whvse/EasyCaptcha
         ArithmeticCaptcha captcha = new ArithmeticCaptcha(111, 36);
         // 几位数运算，默认是两位
         captcha.setLen(2);
-        String result = captcha.text();
-        System.out.println(result);
         String key = codeKey + IdUtil.simpleUUID();
-        System.out.println(key);
-        redisService.saveCode(key, result);
-        return new ImageResult(captcha.toBase64(), key);
+        ImageResult imageResult = new ImageResult();
+        imageResult.setCodeKey(key);
+        imageResult.setCodeUrl(captcha.toBase64());
+        redisService.saveCode(key, captcha.text());
+        return ResponseResult.e(OK.value(), "", true, imageResult);
     }
 
     @ApiOperation("用户登录")
